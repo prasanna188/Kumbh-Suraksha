@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kumbh Suraksha | Smart Disaster Mitigation</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            color: white;
+
+            background:
+                linear-gradient(
+                    rgba(5, 20, 35, 0.45),
+                    rgba(5, 20, 35, 0.72)
+                ),
+                url("/static/sangam-sunrise.jpg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 7%;
+            background: rgba(4, 22, 38, 0.35);
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #ffd166;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            padding: 10px 17px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .nav-link:hover {
+            background: white;
+            color: #10243a;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 55px 22px;
+            text-align: center;
+        }
+
+        .hero {
+            max-width: 850px;
+        }
+
+        .tag {
+            display: inline-block;
+            color: #ffe09a;
+            border: 1px solid rgba(255, 224, 154, 0.7);
+            background: rgba(0, 0, 0, 0.18);
+            padding: 10px 17px;
+            border-radius: 30px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: clamp(42px, 7vw, 76px);
+            line-height: 1.12;
+            margin-bottom: 22px;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 span {
+            color: #ffd166;
+        }
+
+        .description {
+            max-width: 700px;
+            margin: 0 auto 32px;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #ffd166;
+            color: #172c40;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .button:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 38px;
+        }
+
+        .feature {
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: rgba(3, 25, 42, 0.58);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 18px;
+            background: rgba(4, 22, 38, 0.55);
+            color: #e2e8f0;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 18px 5%;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .description {
+                font-size: 16px;
+            }
+
+            .feature {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">KUMBH <span>SURAKSHA</span></div>
+        <a class="nav-link" href="/features">Explore Project</a>
+    </nav>
+
+    <main>
+        <section class="hero">
+
+            <div class="tag">SMART DISASTER MITIGATION SYSTEM</div>
+
+            <h1>
+                Safer Crowds.<br>
+                <span>Smarter Kumbh.</span>
+            </h1>
+
+            <p class="description">
+                Exploring how GIS mapping, crowd monitoring and
+                machine learning demonstrations can support disaster
+                preparedness at large gatherings.
+            </p>
+
+            <a class="button" href="/features">
+                Get Started &nbsp; →
+            </a>
+
+            <div class="features">
+                <div class="feature">🗺️ GIS Safety Map</div>
+                <div class="feature">👥 Crowd Monitoring</div>
+                <div class="feature">🤖 AI Risk Demo</div>
+                <div class="feature">📊 Analytics</div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        Kumbh Suraksha — Academic Project Demonstration<br>
+        Sample data only · Not a real-time emergency warning system
+    </footer>
+
+</body>
+</html>

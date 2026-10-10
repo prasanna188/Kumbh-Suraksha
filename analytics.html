@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kumbh Suraksha | Analytics Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #071326;
+            color: white;
+        }
+
+        nav {
+            background: #0c1b32;
+            padding: 20px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 1px solid #263851;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ffc02e;
+        }
+
+        .links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .links a {
+            color: #e4eaf3;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .links a:hover {
+            color: #ffc02e;
+        }
+
+        .header {
+            padding: 35px 6% 25px;
+        }
+
+        .tag {
+            color: #ffc02e;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 38px);
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            color: #bdc9db;
+            line-height: 1.7;
+        }
+
+        .demo-note {
+            margin: 0 6% 24px;
+            padding: 13px 16px;
+            border: 1px solid #655126;
+            background: #2b261a;
+            color: #ffdf8b;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .dashboard {
+            padding: 0 6% 45px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .card {
+            background: #101f36;
+            border: 1px solid #2b3e59;
+            border-radius: 14px;
+            padding: 22px;
+        }
+
+        .card-title {
+            color: #bdc9db;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .value {
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .sub {
+            color: #9eafc5;
+            font-size: 12px;
+        }
+
+        .gold { color: #ffc02e; }
+        .green { color: #4ade80; }
+        .blue { color: #60a5fa; }
+        .orange { color: #fb923c; }
+
+        .charts {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 20px;
+        }
+
+        .chart-card h2 {
+            font-size: 18px;
+            margin-bottom: 22px;
+        }
+
+        .chart-box {
+            position: relative;
+            height: 280px;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            margin-top: 22px;
+            padding: 15px;
+            background: #0b192d;
+            border-radius: 10px;
+        }
+
+        .status-pill {
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            background: #24452f;
+            color: #86efac;
+        }
+
+        .status-pill.warning {
+            background: #4b3819;
+            color: #fcd34d;
+        }
+
+        .status-pill.critical {
+            background: #4c2025;
+            color: #fca5a5;
+        }
+
+        .controls {
+            margin-top: 22px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        button {
+            border: none;
+            background: #ffc02e;
+            color: #111827;
+            font-weight: bold;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ffda75;
+        }
+
+        .secondary {
+            background: #243751;
+            color: white;
+        }
+
+        .secondary:hover {
+            background: #334b6a;
+        }
+
+        #updateText {
+            color: #9eafc5;
+            font-size: 12px;
+        }
+
+        footer {
+            background: #0c1b32;
+            text-align: center;
+            padding: 22px;
+            color: #aebdd1;
+            font-size: 13px;
+        }
+
+        @media (max-width: 950px) {
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .charts {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">Kumbh <span>Suraksha</span></div>
+
+    <div class="links">
+        <a href="/">Home</a>
+        <a href="/features">Features</a>
+        <a href="/crowd">Crowd Monitoring</a>
+        <a href="/map">GIS Map</a>
+        <a href="/prediction">AI Prediction</a>
+        <a href="/analytics">Analytics</a>
+    </div>
+</nav>
+
+<header class="header">
+    <div class="tag">PROJECT OVERVIEW</div>
+    <h1>Analytics <span class="gold">Dashboard</span></h1>
+    <p>Monitor sample crowd indicators and explore how the dashboard responds to changing demo values.</p>
+</header>
+
+<div class="demo-note">
+    <strong>Demo mode:</strong> All figures below are simulated for an academic project.
+    They are not live sensor readings or real emergency alerts.
+</div>
+
+<main class="dashboard">
+
+    <section class="stats">
+
+        <div class="card">
+            <div class="card-title">👥 Crowd Count</div>
+            <div class="value gold" id="crowdValue">25,000</div>
+            <div class="sub">Simulated people count</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">📊 Crowd Density</div>
+            <div class="value blue" id="densityValue">45%</div>
+            <div class="sub">Illustrative density index</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">🌡️ Temperature</div>
+            <div class="value orange" id="tempValue">30°C</div>
+            <div class="sub">Simulated temperature</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">🚦 Risk Status</div>
+            <div class="value green" id="riskValue">SAFE</div>
+            <div class="sub">Based on demo thresholds</div>
+        </div>
+
+    </section>
+
+    <section class="charts">
+
+        <div class="card chart-card">
+            <h2>📈 Crowd Trend (Demo)</h2>
+            <div class="chart-box">
+                <canvas id="crowdChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card chart-card">
+            <h2>🎯 Density Overview</h2>
+            <div class="chart-box">
+                <canvas id="densityChart"></canvas>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="card" style="margin-top:20px;">
+        <h2>System Status</h2>
+
+        <div class="status-row">
+            <span>Current demonstration risk</span>
+            <span id="statusPill" class="status-pill">SAFE</span>
+        </div>
+
+        <div class="controls">
+            <button onclick="updateDemo()">↻ Update Demo Data</button>
+            <button class="secondary" onclick="toggleAuto()" id="autoButton">
+                Pause Auto Update
+            </button>
+            <span id="updateText">Auto update every 5 seconds</span>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    Kumbh Suraksha | Smart Disaster Mitigation Project
+</footer>
+
+<script>
+    let crowd = 25000;
+    let density = 45;
+    let temperature = 30;
+    let autoEnabled = true;
+    let timer;
+
+    const labels = ['1', '2', '3', '4', '5', 'Now'];
+    const crowdHistory = [18000, 21000, 19500, 23000, 22000, 25000];
+
+    const crowdChart = new Chart(
+        document.getElementById('crowdChart'),
+        {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Demo crowd count',
+                    data: crowdHistory,
+                    borderColor: '#ffc02e',
+                    backgroundColor: 'rgba(255,192,46,0.14)',
+                    fill: true,
+                    tension: 0.35,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#e4eaf3' }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#bdc9db' },
+                        grid: { color: '#263851' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#bdc9db' },
+                        grid: { color: '#263851' }
+                    }
+                }
+            }
+        }
+    );
+
+    const densityChart = new Chart(
+        document.getElementById('densityChart'),
+        {
+            type: 'doughnut',
+            data: {
+                labels: ['Density index', 'Remaining index'],
+                datasets: [{
+                    data: [density, 100 - density],
+                    backgroundColor: ['#ffc02e', '#263851'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '72%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#e4eaf3', padding: 18 }
+                    }
+                }
+            }
+        }
+    );
+
+    function getRisk() {
+        if (density >= 80 || crowd >= 80000 || temperature >= 40) {
+            return 'CRITICAL';
+        }
+
+        if (density >= 60 || crowd >= 40000 || temperature >= 35) {
+            return 'WARNING';
+        }
+
+        return 'SAFE';
+    }
+
+    function renderDashboard() {
+        document.getElementById('crowdValue').textContent =
+            crowd.toLocaleString('en-IN');
+
+        document.getElementById('densityValue').textContent =
+            density + '%';
+
+        document.getElementById('tempValue').textContent =
+            temperature + '°C';
+
+        const risk = getRisk();
+        const riskValue = document.getElementById('riskValue');
+        const pill = document.getElementById('statusPill');
+
+        riskValue.textContent = risk;
+        pill.textContent = risk;
+
+        riskValue.className = 'value';
+        pill.className = 'status-pill';
+
+        if (risk === 'WARNING') {
+            riskValue.classList.add('orange');
+            pill.classList.add('warning');
+        } else if (risk === 'CRITICAL') {
+            riskValue.classList.add('red');
+            pill.classList.add('critical');
+        } else {
+            riskValue.classList.add('green');
+        }
+
+        crowdChart.data.labels.push('Now');
+        crowdChart.data.datasets[0].data.push(crowd);
+
+        if (crowdChart.data.labels.length > 6) {
+            crowdChart.data.labels.shift();
+            crowdChart.data.datasets[0].data.shift();
+        }
+
+        crowdChart.update();
+
+        densityChart.data.datasets[0].data = [
+            density,
+            100 - density
+        ];
+        densityChart.update();
+
+        document.getElementById('updateText').textContent =
+            'Last demo update: ' + new Date().toLocaleTimeString();
+    }
+
+    function updateDemo() {
+        // Change sample values for demonstration only.
+        crowd = Math.max(
+            1000,
+            Math.min(100000, crowd + Math.floor(Math.random() * 16001) - 8000)
+        );
+
+        density = Math.max(
+            10,
+            Math.min(100, density + Math.floor(Math.random() * 21) - 10)
+        );
+
+        temperature = Math.max(
+            20,
+            Math.min(45, temperature + Math.floor(Math.random() * 5) - 2)
+        );
+
+        renderDashboard();
+    }
+
+    function startAuto() {
+        clearInterval(timer);
+        timer = setInterval(function() {
+            if (autoEnabled) {
+                updateDemo();
+            }
+        }, 5000);
+    }
+
+    function toggleAuto() {
+        autoEnabled = !autoEnabled;
+
+        document.getElementById('autoButton').textContent =
+            autoEnabled ? 'Pause Auto Update' : 'Resume Auto Update';
+
+        document.getElementById('updateText').textContent =
+            autoEnabled ? 'Auto update every 5 seconds' : 'Auto update paused';
+
+        if (autoEnabled) {
+            startAuto();
+        } else {
+            clearInterval(timer);
+        }
+    }
+
+    renderDashboard();
+    startAuto();
+</script>
+
+</body>
+</html>

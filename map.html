@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kumbh Suraksha | GIS Safety Map</title>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #071326;
+            color: white;
+            min-height: 100vh;
+        }
+
+        nav {
+            padding: 20px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: #0c1b32;
+            border-bottom: 1px solid #263851;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ffc02e;
+        }
+
+        .links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .links a {
+            color: #e4eaf3;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .links a:hover {
+            color: #ffc02e;
+        }
+
+        .header {
+            padding: 35px 6% 20px;
+        }
+
+        .tag {
+            color: #ffc02e;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 38px);
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            color: #c5d0e0;
+            line-height: 1.7;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 260px minmax(0, 1fr);
+            gap: 22px;
+            padding: 10px 6% 35px;
+        }
+
+        .panel {
+            background: #101f36;
+            border: 1px solid #2b3e59;
+            border-radius: 14px;
+            padding: 22px;
+            align-self: start;
+        }
+
+        .panel h2 {
+            font-size: 18px;
+            margin-bottom: 18px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 18px 0;
+            color: #dbe4f1;
+            font-size: 14px;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .green { background: #22c55e; }
+        .orange { background: #f59e0b; }
+        .red { background: #ef4444; }
+        .blue { background: #38bdf8; }
+
+        .note {
+            margin-top: 22px;
+            border-top: 1px solid #30425b;
+            padding-top: 18px;
+            font-size: 12px;
+            color: #aebdd1;
+            line-height: 1.7;
+        }
+
+        .map-section {
+            min-width: 0;
+        }
+
+        .map-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .map-top h2 {
+            font-size: 19px;
+        }
+
+        .demo-badge {
+            color: #ffc02e;
+            background: #302a1b;
+            border: 1px solid #62502a;
+            border-radius: 20px;
+            padding: 7px 12px;
+            font-size: 12px;
+        }
+
+        #map {
+            height: 510px;
+            width: 100%;
+            border-radius: 14px;
+            border: 1px solid #344761;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .map-caption {
+            color: #aebdd1;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+
+        footer {
+            padding: 22px;
+            text-align: center;
+            color: #aebdd1;
+            background: #0c1b32;
+            font-size: 13px;
+        }
+
+        @media (max-width: 800px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            #map {
+                height: 420px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">Kumbh <span>Suraksha</span></div>
+
+    <div class="links">
+        <a href="/">Home</a>
+        <a href="/features">Features</a>
+        <a href="/crowd">Crowd Monitoring</a>
+        <a href="/map">GIS Map</a>
+        <a href="/prediction">AI Prediction</a>
+        <a href="/analytics">Analytics</a>
+    </div>
+</nav>
+
+<section class="header">
+    <div class="tag">Geographic Information System</div>
+    <h1>GIS <span style="color:#ffc02e;">Safety Map</span></h1>
+    <p>
+        Explore a demonstration map showing example crowd-risk zones
+        and illustrative emergency-service markers near Prayagraj.
+    </p>
+</section>
+
+<main class="layout">
+
+    <aside class="panel">
+        <h2>Map Legend</h2>
+
+        <div class="legend-item">
+            <span class="dot green"></span>
+            <span>Low Risk Zone</span>
+        </div>
+
+        <div class="legend-item">
+            <span class="dot orange"></span>
+            <span>Medium Risk Zone</span>
+        </div>
+
+        <div class="legend-item">
+            <span class="dot red"></span>
+            <span>High Risk Zone</span>
+        </div>
+
+        <div class="legend-item">
+            <span class="dot blue"></span>
+            <span>Sample Service Marker</span>
+        </div>
+
+        <div class="note">
+            <strong>Important:</strong> Risk zones and service markers
+            on this page are illustrative examples. They do not
+            represent verified live crowd conditions or actual
+            emergency-service locations.
+        </div>
+    </aside>
+
+    <section class="map-section">
+        <div class="map-top">
+            <h2>Prayagraj — Demo View</h2>
+            <span class="demo-badge">● Simulation Data</span>
+        </div>
+
+        <div id="map"></div>
+
+        <p class="map-caption">
+            Map tiles require an internet connection. Use the zoom
+            controls to explore the map. Sample circles are for
+            academic demonstration only.
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    Kumbh Suraksha | Student Disaster Mitigation Project
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    // Approximate Sangam area for the demonstration map.
+    const map = L.map('map').setView([25.425, 81.89], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 19
+    }).addTo(map);
+
+    // Illustrative risk zones only — not live risk measurements.
+    const zones = [
+        {
+            name: 'Low Risk Demo Zone',
+            position: [25.430, 81.880],
+            radius: 350,
+            color: '#22c55e'
+        },
+        {
+            name: 'Medium Risk Demo Zone',
+            position: [25.422, 81.895],
+            radius: 300,
+            color: '#f59e0b'
+        },
+        {
+            name: 'High Risk Demo Zone',
+            position: [25.416, 81.905],
+            radius: 250,
+            color: '#ef4444'
+        }
+    ];
+
+    zones.forEach(function(zone) {
+        L.circle(zone.position, {
+            color: zone.color,
+            fillColor: zone.color,
+            fillOpacity: 0.28,
+            weight: 2,
+            radius: zone.radius
+        })
+        .addTo(map)
+        .bindPopup(
+            '<strong>' + zone.name + '</strong><br>' +
+            'Illustrative zone — not live data.'
+        );
+    });
+
+    // Generic sample markers; not real service locations.
+    const samples = [
+        {
+            position: [25.435, 81.895],
+            title: 'Sample Medical Help Point',
+            description: 'Illustrative marker only.'
+        },
+        {
+            position: [25.414, 81.880],
+            title: 'Sample Police Help Point',
+            description: 'Illustrative marker only.'
+        },
+        {
+            position: [25.428, 81.910],
+            title: 'Sample Shelter Point',
+            description: 'Illustrative marker only.'
+        }
+    ];
+
+    samples.forEach(function(point) {
+        L.marker(point.position)
+            .addTo(map)
+            .bindPopup(
+                '<strong>' + point.title + '</strong><br>' +
+                point.description
+            );
+    });
+</script>
+
+</body>
+</html>

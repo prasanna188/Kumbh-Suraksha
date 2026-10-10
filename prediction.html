@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Risk Prediction | Kumbh Suraksha</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 16px;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: white;
+            background: linear-gradient(135deg, #101827, #173b50);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        a {
+            color: #76e5d2;
+            text-decoration: none;
+        }
+
+        h1 {
+            text-align: center;
+            color: #76e5d2;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #d1d9e2;
+            line-height: 1.6;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #526579;
+            border-radius: 9px;
+            background: #f5f8fc;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: #18b99b;
+            color: #071d24;
+            border: none;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #4cdec1;
+        }
+
+        .result {
+            margin-top: 24px;
+            padding: 22px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid;
+        }
+
+        .result h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        .result p {
+            line-height: 1.6;
+        }
+
+        .low {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: #22c55e;
+            color: #86efac;
+        }
+
+        .medium {
+            background: rgba(249, 115, 22, 0.15);
+            border-color: #f97316;
+            color: #fdba74;
+        }
+
+        .high {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+            color: #fca5a5;
+        }
+
+        .error {
+            margin-top: 20px;
+            color: #ffb6b6;
+            text-align: center;
+        }
+
+        .notice {
+            margin-top: 25px;
+            color: #c5cfda;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <a href="/features">← Back to Features</a>
+
+        <h1>AI Risk Prediction</h1>
+
+        <p class="subtitle">
+            Enter crowd conditions to test our trained
+            Machine Learning demo model.
+        </p>
+
+        <form method="POST" action="/prediction">
+
+            <label for="crowd_count">Crowd Count (people)</label>
+            <input
+                type="number"
+                id="crowd_count"
+                name="crowd_count"
+                min="0"
+                step="1"
+                value="{{ request.form.get('crowd_count', '') }}"
+                required
+            >
+
+            <label for="temperature">Temperature (°C)</label>
+            <input
+                type="number"
+                id="temperature"
+                name="temperature"
+                min="0"
+                step="any"
+                value="{{ request.form.get('temperature', '') }}"
+                required
+            >
+
+            <label for="density">Crowd Density (%)</label>
+            <input
+                type="number"
+                id="density"
+                name="density"
+                min="0"
+                max="100"
+                step="any"
+                value="{{ request.form.get('density', '') }}"
+                required
+            >
+
+            <button type="submit">Predict Risk</button>
+
+        </form>
+
+        {% if result %}
+        <div class="result {% if result == 'LOW RISK' %}low{% elif result == 'MEDIUM RISK' %}medium{% else %}high{% endif %}">
+            <h2>
+                {% if result == 'LOW RISK' %}
+                    🟢 LOW RISK
+                {% elif result == 'MEDIUM RISK' %}
+                    🟠 MEDIUM RISK
+                {% else %}
+                    🔴 HIGH RISK
+                {% endif %}
+            </h2>
+
+            <p>
+                {% if result == 'LOW RISK' %}
+                    The demo model classifies these inputs as low risk.
+                {% elif result == 'MEDIUM RISK' %}
+                    The demo model classifies these inputs as medium risk.
+                {% else %}
+                    The demo model classifies these inputs as high risk.
+                {% endif %}
+            </p>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <p class="notice">
+            <strong>Demo limitation:</strong> This model uses a small,
+            simulated dataset. Predictions are not validated for real
+            Kumbh Mela conditions and must not be used for actual
+            emergency or evacuation decisions.
+        </p>
+
+    </div>
+</body>
+</html>

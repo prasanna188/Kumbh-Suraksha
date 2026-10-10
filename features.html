@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Disaster Management | Kumbh Suraksha</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: white;
+            background:
+                linear-gradient(rgba(5, 15, 28, 0.78),
+                                rgba(5, 15, 28, 0.88)),
+                url("/static/kumbh-background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        nav {
+            padding: 20px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #76e5d2;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+        }
+
+        nav a:hover {
+            color: #76e5d2;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 55px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: clamp(30px, 5vw, 44px);
+            margin-bottom: 12px;
+        }
+
+        .intro {
+            color: #dbe5ee;
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0 auto 35px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            text-align: left;
+            padding: 25px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .emoji {
+            font-size: 35px;
+        }
+
+        .card h2 {
+            font-size: 21px;
+            margin: 15px 0 10px;
+        }
+
+        .card p {
+            color: #dbe5ee;
+            line-height: 1.6;
+            min-height: 75px;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 11px 15px;
+            border-radius: 8px;
+            color: #071d24;
+            background: #76e5d2;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .card a:hover {
+            background: #a3f3e5;
+        }
+
+        .emergency {
+            border-color: rgba(248, 113, 113, 0.7);
+        }
+
+        .emergency a {
+            background: #f87171;
+            color: #2b0808;
+        }
+
+        .emergency a:hover {
+            background: #fca5a5;
+        }
+
+        .note {
+            margin-top: 30px;
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 500px) {
+            nav a {
+                margin: 5px 8px 5px 0;
+            }
+
+            .container {
+                padding-top: 35px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">🛡️ Kumbh Suraksha</div>
+
+        <div>
+            <a href="/">Home</a>
+            <a href="/features">Features</a>
+            <a href="/analytics">Analytics</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <h1>Smart Disaster Management</h1>
+
+        <p class="intro">
+            Explore the demonstration tools designed to support
+            crowd monitoring, safety mapping, risk assessment,
+            analytics and emergency alert planning for Kumbh Mela.
+        </p>
+
+        <div class="grid">
+
+            <div class="card">
+                <div class="emoji">👥</div>
+                <h2>Crowd Monitoring</h2>
+                <p>
+                    View sample crowd counts, temperature and
+                    crowd-density information.
+                </p>
+                <a href="/crowd">Open Dashboard</a>
+            </div>
+
+            <div class="card">
+                <div class="emoji">🗺️</div>
+                <h2>GIS Safety Map</h2>
+                <p>
+                    Explore a demonstration map with illustrative
+                    zones and markers.
+                </p>
+                <a href="/map">Explore Map</a>
+            </div>
+
+            <div class="card">
+                <div class="emoji">🤖</div>
+                <h2>AI Risk Prediction</h2>
+                <p>
+                    Enter sample crowd conditions and view the
+                    trained demo model's risk category.
+                </p>
+                <a href="/prediction">Predict Risk</a>
+            </div>
+
+            <div class="card">
+                <div class="emoji">📊</div>
+                <h2>Analytics Dashboard</h2>
+                <p>
+                    Explore sample charts and simulated
+                    crowd-monitoring metrics.
+                </p>
+                <a href="/analytics">View Analytics</a>
+            </div>
+
+            <div class="card emergency">
+                <div class="emoji">🚨</div>
+                <h2>Emergency Alerts</h2>
+                <p>
+                    View sample high-priority alerts, warning
+                    messages and suggested safety actions.
+                </p>
+                <a href="/emergency">Open Alert Center</a>
+            </div>
+
+        </div>
+
+        <p class="note">
+            Project demonstration only. Crowd figures, risk predictions,
+            map markers and alerts are not verified live information
+            and must not be used for real emergency decisions.
+        </p>
+
+    </main>
+
+</body>
+</html>
