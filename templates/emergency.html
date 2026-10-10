@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Alerts | Kumbh Suraksha</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 25px 16px;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #f8fafc;
+            background: linear-gradient(135deg, #0f172a, #173b50);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .back {
+            color: #76e5d2;
+            text-decoration: none;
+        }
+
+        header {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        header h1 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .status {
+            padding: 14px;
+            border: 1px solid #f59e0b;
+            background: rgba(245, 158, 11, 0.12);
+            border-radius: 10px;
+            color: #fcd34d;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .card {
+            padding: 22px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #cbd5e1;
+            font-size: 15px;
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 10px 0 0;
+        }
+
+        .section-title {
+            margin: 30px 0 16px;
+        }
+
+        .alert {
+            padding: 20px;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 5px solid;
+        }
+
+        .alert h3 {
+            margin-top: 0;
+        }
+
+        .alert p {
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+
+        .red {
+            border-color: #ef4444;
+        }
+
+        .red h3 {
+            color: #fca5a5;
+        }
+
+        .orange {
+            border-color: #f59e0b;
+        }
+
+        .orange h3 {
+            color: #fcd34d;
+        }
+
+        .green {
+            border-color: #22c55e;
+        }
+
+        .green h3 {
+            color: #86efac;
+        }
+
+        .demo-label {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            color: #cbd5e1;
+        }
+
+        .button {
+            display: inline-block;
+            margin: 8px 8px 0 0;
+            padding: 12px 18px;
+            background: #18b99b;
+            color: #071d24;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+        }
+
+        .button.secondary {
+            background: transparent;
+            color: #76e5d2;
+            border: 1px solid #76e5d2;
+        }
+
+        .notice {
+            margin-top: 28px;
+            padding: 16px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 500px) {
+            header h1 {
+                font-size: 27px;
+            }
+
+            .number {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <a class="back" href="/features">← Back to Dashboard</a>
+
+        <header>
+            <h1>🚨 Emergency Alert Center</h1>
+            <p>Kumbh Suraksha — Smart Disaster Mitigation System</p>
+        </header>
+
+        <div class="status">
+            ⚠️ DEMO MODE — Alerts are sample messages,
+            not verified live emergencies.
+        </div>
+
+        {% if latest_prediction %}
+            {% if latest_prediction.risk == "HIGH RISK" %}
+                <div class="alert red">
+                    <span class="demo-label">LATEST ML DEMO RESULT</span>
+                    <h3>🔴 HIGH RISK — Review Required</h3>
+                    <p>
+                        The demo ML model classified the submitted
+                        conditions as HIGH RISK. This is not a verified
+                        real-world emergency.
+                    </p>
+            {% elif latest_prediction.risk == "MEDIUM RISK" %}
+                <div class="alert orange">
+                    <span class="demo-label">LATEST ML DEMO RESULT</span>
+                    <h3>🟠 MEDIUM RISK — Review Required</h3>
+                    <p>
+                        The demo ML model classified the submitted
+                        conditions as MEDIUM RISK. This is not a verified
+                        real-world warning.
+                    </p>
+            {% else %}
+                <div class="alert green">
+                    <span class="demo-label">LATEST ML DEMO RESULT</span>
+                    <h3>🟢 LOW RISK — Demo Classification</h3>
+                    <p>
+                        The demo ML model classified the submitted
+                        conditions as LOW RISK. This does not guarantee
+                        that real-world conditions are safe.
+                    </p>
+            {% endif %}
+
+                    <p><strong>Crowd count:</strong> {{ latest_prediction.crowd_count }}</p>
+                    <p><strong>Temperature:</strong> {{ latest_prediction.temperature }} °C</p>
+                    <p><strong>Crowd density:</strong> {{ latest_prediction.density }}%</p>
+                    <p><strong>Prediction time:</strong> {{ latest_prediction.time }}</p>
+                </div>
+        {% else %}
+            <div class="alert orange">
+                <h3>ℹ️ No prediction submitted yet</h3>
+                <p>
+                    Visit AI Risk Prediction, enter sample conditions,
+                    and click Predict Risk. Your latest result will
+                    appear here during this session.
+                </p>
+                <a class="button" href="/prediction">Open AI Risk Prediction</a>
+            </div>
+        {% endif %}
+
+        <div class="summary">
+            <div class="card">
+                <h3>🔴 High-Priority Sample Alerts</h3>
+                <div class="number">1</div>
+            </div>
+
+            <div class="card">
+                <h3>🟠 Warning Sample Alerts</h3>
+                <div class="number">1</div>
+            </div>
+
+            <div class="card">
+                <h3>🟢 Information Sample Alerts</h3>
+                <div class="number">1</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Sample Safety Messages</h2>
+
+        <div class="alert red">
+            <span class="demo-label">SAMPLE MESSAGE</span>
+            <h3>🔴 High Crowd Density</h3>
+            <p>
+                Example message: Crowd density may require assessment
+                by authorized event personnel.
+            </p>
+            <p>
+                <strong>Suggested action:</strong> Verify actual
+                conditions with official monitoring teams.
+            </p>
+        </div>
+
+        <div class="alert orange">
+            <span class="demo-label">SAMPLE MESSAGE</span>
+            <h3>🟠 Weather Monitoring</h3>
+            <p>
+                Example message: Review verified weather information
+                and crowd-management arrangements.
+            </p>
+            <p>
+                <strong>Suggested action:</strong> Follow official
+                weather advisories and event instructions.
+            </p>
+        </div>
+
+        <div class="alert green">
+            <span class="demo-label">SAMPLE MESSAGE</span>
+            <h3>🟢 Safety Information</h3>
+            <p>
+                Keep access routes clear and follow instructions
+                from authorized event staff.
+            </p>
+        </div>
+
+        <h2 class="section-title">Quick Navigation</h2>
+
+        <a class="button" href="/prediction">AI Risk Prediction</a>
+        <a class="button secondary" href="/crowd">Crowd Monitoring</a>
+        <a class="button secondary" href="/map">Safety Map</a>
+        <a class="button secondary" href="/analytics">Analytics</a>
+
+        <div class="notice">
+            <strong>Important:</strong> This is a project demonstration.
+            The model uses simulated training data. Alerts are not sent
+            to emergency services, and the page does not receive live
+            crowd or sensor data. Real emergency decisions require
+            verified information and authorized responders.
+        </div>
+
+    </div>
+</body>
+</html>

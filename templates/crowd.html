@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kumbh Suraksha - Crowd Monitoring</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #183047;
+            padding: 25px;
+        }
+
+        header {
+            text-align: center;
+            padding: 25px 10px;
+        }
+
+        header h1 {
+            color: #0b6175;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            color: #536779;
+            line-height: 1.6;
+        }
+
+        .dashboard {
+            max-width: 1000px;
+            margin: 25px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #18304712;
+        }
+
+        .card h2 {
+            font-size: 17px;
+            color: #536779;
+            margin-bottom: 18px;
+        }
+
+        .value {
+            font-size: 30px;
+            font-weight: bold;
+            color: #0b6175;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: #fff0c2;
+            color: #805900;
+            font-weight: bold;
+        }
+
+        .notice {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: #e0f2fe;
+            padding: 18px;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin: 25px;
+            color: #0b6175;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>👥 Crowd Monitoring</h1>
+        <p>Sample crowd conditions for the Kumbh Suraksha demonstration.</p>
+    </header>
+
+    <main class="dashboard">
+        <section class="card">
+            <h2>Estimated Crowd Count</h2>
+            <div class="value">25,000</div>
+        </section>
+
+        <section class="card">
+            <h2>Temperature</h2>
+            <div class="value">30 °C</div>
+        </section>
+
+        <section class="card">
+            <h2>Crowd Density</h2>
+            <div class="value">65%</div>
+        </section>
+
+        <section class="card">
+            <h2>Demo Risk Level</h2>
+            <div class="status">WARNING</div>
+        </section>
+    </main>
+
+    <div class="notice">
+        <strong>Demo notice:</strong>
+        All values on this page are illustrative sample data.
+        They are not live measurements or real safety alerts.
+    </div>
+
+    <a class="back" href="/features">← Back to Features</a>
+</body>
+</html>
