@@ -1,0 +1,11 @@
+crowd_density,emergency_incidents,risk_level
+low,0,Low
+medium,1,Medium
+high,3,High
+low,0,Low
+medium,2,Medium
+high,5,High
+medium,0,Low
+high,2,High
+low,1,Low
+medium,3,High
